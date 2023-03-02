@@ -1,13 +1,26 @@
-import React from "react";
+import React, {useRef} from "react";
 import {bank1} from "./App"
 
 function Pad({handleClick, power, backgroundStyle, element, id }) {
+
+  const audio = new Audio(bank1[element].source);
+
+  window.addEventListener("keydown", (e) => {
+    if(e.key === element || e.key === element.toLowerCase()){
+      handleClick(bank1[element]);
+      audio.play();
+    } 
+  })
+
     return (
       <button 
         data-tag={id}
         type='button'
         className='drum-pad' 
-        onClick={handleClick} 
+        onClick={() => {
+          audio.play();
+          handleClick(bank1[element])
+        }} 
         id={bank1[element]} 
         disabled={!power} 
         style={{background: `${backgroundStyle}`}}>
@@ -17,4 +30,4 @@ function Pad({handleClick, power, backgroundStyle, element, id }) {
     );
   }
   
-  export default Pad ; 
+  export default Pad ;
